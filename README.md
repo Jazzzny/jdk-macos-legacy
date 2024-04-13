@@ -17,7 +17,11 @@ Builds of the OpenJDK are compiled from release tags on a regular basis. These b
 ## Building
 1. Clone this repository
 2. Apply the patch files (located in the patches/`version number` folders) to the OpenJDK source code for the version you want to build
-3. Follow the build instructions for OpenJDK
+3. Run any shell scripts in the patches/`version number` folder. All scripts have the following syntax:
+```shell
+./script.sh /path/to/openjdk/source
+```
+4. Follow the build instructions for OpenJDK
 
 ## License
 This project is licensed under the GPL v2 license. For more information, see the [LICENSE](LICENSE) file.
