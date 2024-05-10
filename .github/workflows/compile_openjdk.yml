@@ -42,5 +42,17 @@ jobs:
                 arch -x86_64 bash configure --disable-precompiled-headers --with-debug-level=release --with-native-debug-symbols=none --with-extra-cxxflags="-stdlib=libc++" --enable-warnings-as-errors=no --with-conf-name=release --with-vendor-name="Jazzzny" --without-version-opt --without-version-pre --with-vendor-version-string="jdk-macos-legacy"
                 make images
 
+        - name: Archive the build folder
+          run: |
+                cd jdk17u
+                tar -czf jdk-macos-legacy.tar.gz build
+
+        - name: Upload the build folder
+          uses: actions/upload-artifact@v4
+          with:
+            name: jdk-macos-legacy
+            path: jdk17u/jdk-macos-legacy.tar.gz
+
+
 
 
