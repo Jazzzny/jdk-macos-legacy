@@ -31,3 +31,12 @@ jobs:
         - name: Run patch scripts
           run: |
                 bash patches/17/remove_metal_backend.sh jdk17u
+
+        - name: Configure
+          run: |
+                cd jdk17u
+                arch -x86_64 bash configure --disable-precompiled-headers --with-debug-level=release --with-native-debug-symbols=none --with-extra-cxxflags="-stdlib=libc++" --enable-warnings-as-errors=no --with-conf-name=release --with-vendor-name="Jazzzny" --without-version-opt --without-version-pre --with-vendor-version-string="jdk-macos-legacy"
+                make images
+
+
+
