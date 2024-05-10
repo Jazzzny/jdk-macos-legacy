@@ -19,10 +19,10 @@ jobs:
         - name: Clone OpenJDK
           run: |
                 git clone https://github.com/openjdk/jdk17u.git --depth 1 --branch jdk-17.0.12+2
-                cd jdk17u
 
         - name: Apply patches
           run: |
+                cd jdk17u
                 git apply ../jdk-macos-legacy/patches/17/10.8.patch
                 git apply ../jdk-macos-legacy/patches/17/awtwindow.patch
                 git apply ../jdk-macos-legacy/patches/17/remove_disconnectx.patch
@@ -30,4 +30,4 @@ jobs:
 
         - name: Run patch scripts
           run: |
-                    bash ../jdk-macos-legacy/patches/17/remove_metal_backend.sh .
+                bash jdk-macos-legacy/patches/17/remove_metal_backend.sh jdk17u
