@@ -1,0 +1,21 @@
+diff --git a/src/java.desktop/macosx/native/libawt_lwawt/awt/AWTWindow.m b/src/java.desktop/macosx/native/libawt_lwawt/awt/AWTWindow.m
+index 150e82c6965..965760b3646 100644
+--- a/src/java.desktop/macosx/native/libawt_lwawt/awt/AWTWindow.m
++++ b/src/java.desktop/macosx/native/libawt_lwawt/awt/AWTWindow.m
+@@ -1104,10 +1104,12 @@ + (AWTWindow *) lastKeyWindow {
+ {
+     JNI_COCOA_ENTER(env);
+     [ThreadUtilities performOnMainThreadWaiting:NO block:^(){
+-        if (allowAutomaticTabbing) {
+-            [NSWindow setAllowsAutomaticWindowTabbing:YES];
+-        } else {
+-            [NSWindow setAllowsAutomaticWindowTabbing:NO];
++        if ([NSWindow respondsToSelector:@selector(setAllowsAutomaticWindowTabbing:)]) {
++            if (allowAutomaticTabbing) {
++                [NSWindow setAllowsAutomaticWindowTabbing:YES];
++            } else {
++                [NSWindow setAllowsAutomaticWindowTabbing:NO];
++            }
+         }
+     }];
+     JNI_COCOA_EXIT(env);

@@ -1,0 +1,34 @@
+name: Compile OpenJDK with jdk-macos-legacy patches
+
+on:
+    push:
+        branches:
+        - master
+    pull_request:
+        branches:
+        - master
+
+jobs:
+    build:
+        name: Build OpenJDK versions
+        runs-on: macos-latest
+
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Clone OpenJDK
+          run: |
+                git clone https://github.com/openjdk/jdk17u.git --depth 1 --branch jdk-17.0.12+2
+                cd jdk17u
+
+        - name: Apply patches
+          run: |
+                git apply ../jdk-macos-legacy/patches/17/10.8.patch
+                git apply ../jdk-macos-legacy/patches/17/awtwindow.patch
+                git apply ../jdk-macos-legacy/patches/17/remove_disconnectx.patch
+                git apply ../jdk-macos-legacy/patches/17/remove_metal_backend.patch
+
+        - name: Run patch scripts
+          run: |
+                    bash ../jdk-macos-legacy/patches/17/remove_metal_backend.sh .
