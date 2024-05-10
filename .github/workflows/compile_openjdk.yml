@@ -18,6 +18,7 @@ jobs:
 
         - name: Clone OpenJDK
           run: |
+                ls
                 git clone https://github.com/openjdk/jdk17u.git --depth 1 --branch jdk-17.0.12+2
 
         - name: Apply patches
