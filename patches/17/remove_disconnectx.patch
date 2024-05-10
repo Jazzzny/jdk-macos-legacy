@@ -1,8 +1,8 @@
 diff --git a/src/java.base/unix/native/libnio/ch/DatagramChannelImpl.c b/src/java.base/unix/native/libnio/ch/DatagramChannelImpl.c
-index 902a816419d..553126950fa 100644
+index 902a816419d..6397d79447a 100644
 --- a/src/java.base/unix/native/libnio/ch/DatagramChannelImpl.c
 +++ b/src/java.base/unix/native/libnio/ch/DatagramChannelImpl.c
-@@ -50,28 +50,21 @@ Java_sun_nio_ch_DatagramChannelImpl_disconnect0(JNIEnv *env, jclass clazz,
+@@ -50,28 +50,20 @@ Java_sun_nio_ch_DatagramChannelImpl_disconnect0(JNIEnv *env, jclass clazz,
      jint fd = fdval(env, fdo);
      int rv;
  
@@ -20,15 +20,15 @@ index 902a816419d..553126950fa 100644
 -    #endif
      socklen_t len = isIPv6 ? sizeof(struct sockaddr_in6) :
                               sizeof(struct sockaddr_in);
+-    rv = connect(fd, &sa.sa, len);
 +
 +    memset(&sa, 0, sizeof(sa));
 +#if defined(_ALLBSD_SOURCE)
 +    sa.sa.sa_family = isIPv6 ? AF_INET6 : AF_INET;
 +#else
 +    sa.sa.sa_family = AF_UNSPEC;
-+#endif
-     rv = connect(fd, &sa.sa, len);
  #endif
++    rv = connect(fd, &sa.sa, len);
  
 -#if defined(_ALLBSD_SOURCE) && !defined(__APPLE__)
 -    // On _ALLBSD_SOURCE except __APPLE__ we consider EADDRNOTAVAIL
