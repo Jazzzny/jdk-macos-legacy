@@ -49,7 +49,7 @@ jobs:
         - name: Run packaging scripts
           run: |
                 cd installer
-                ./packagesbuild.sh --major_version 17 --full_version 17.0.12+2 --input_directory ../jdk17u/build/release/images/jdk-bundle/jdk-17.0.12.jdk --output_directory ../jdk17u/build/release/images/jdk-bundle/jdk-17.0.12+2.pkg --jvm hotspot --architecture x86_64 --type jdk --vendor jazzzny --package-name OpenJDK --logo /System/Library/CoreServices/JavaLauncher.app/Contents/Resources/class.icns
+                ./pkgbuild/packagesbuild.sh --major_version 17 --full_version 17.0.12+2 --input_directory ../jdk17u/build/release/images/jdk-bundle/jdk-17.0.12.jdk --output_directory ../jdk17u/build/release/images/jdk-bundle/jdk-17.0.12+2.pkg --jvm hotspot --architecture x86_64 --type jdk --vendor jazzzny --package-name OpenJDK --logo /System/Library/CoreServices/JavaLauncher.app/Contents/Resources/class.icns
 
         - name: Archive the jdk image
           run: |
