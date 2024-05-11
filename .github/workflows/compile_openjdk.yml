@@ -42,16 +42,31 @@ jobs:
                 arch -x86_64 bash configure --disable-precompiled-headers --with-debug-level=release --with-native-debug-symbols=none --with-extra-cxxflags="-stdlib=libc++" --enable-warnings-as-errors=no --with-conf-name=release --with-vendor-name="Jazzzny" --without-version-opt --without-version-pre --with-vendor-version-string="jdk-macos-legacy"
                 make images
 
-        - name: Archive the build folder
+        - name: Clone Adoptium packaging scripts
           run: |
-                cd jdk17u
-                tar -czf jdk-macos-legacy.tar.gz build
+                git clone https://github.com/adoptium/installer.git
 
-        - name: Upload the build folder
+        - name: Run packaging scripts
+          run: |
+                cd installer
+                ./packagesbuild.sh --major_version 17 --full_version 17.0.12+2 --input_directory ../jdk17u/build/release/images/jdk-bundle/jdk-17.0.12.jdk --output_directory ../jdk17u/build/release/images/jdk-bundle/jdk-17.0.12+2.pkg --jvm hotspot --architecture x86_64 --type jdk --vendor jazzzny --package-name OpenJDK --logo /System/Library/CoreServices/JavaLauncher.app/Contents/Resources/class.icns
+
+        - name: Archive the jdk image
+          run: |
+                cd jdk17u/build/release/images/jdk-bundle
+                tar -czf jdk-macos-legacy.tar.gz jdk-17.0.12.jdk
+
+        - name: Upload JDK installer
           uses: actions/upload-artifact@v4
           with:
-            name: jdk-macos-legacy
-            path: jdk17u/jdk-macos-legacy.tar.gz
+            name: jdk
+            path: jdk17u/build/release/images/jdk-bundle/jdk-17.0.12+2.pkg
+
+        - name: Upload JDK image
+          uses: actions/upload-artifact@v4
+          with:
+            name: jdk-image
+            path: jdk17u/build/release/images/jdk-bundle/jdk-macos-legacy.tar.gz
 
 
 
